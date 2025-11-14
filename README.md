@@ -1,12 +1,9 @@
 # Earthquakes
 
 Lead: epeguero  Emilio Peguero
-
 Designer: cwhite29  
-
 SWE: tmcdile  
-
-Tester: dnichol5  
+Tester: dnichol5  DeAnna Nichols
 
 Prioritized Project Ideas:
 1. CPSC Register  
