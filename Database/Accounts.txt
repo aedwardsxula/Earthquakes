@@ -1,0 +1,3 @@
+STUDENT,900771734,Student Test,Freshman,Comp Sci,false
+PROFESSOR,700186639,Dr. Test
+ADMIN,800336862,Big Boss
