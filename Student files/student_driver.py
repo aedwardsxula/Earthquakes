@@ -1,7 +1,5 @@
 def student_driver(student):
     while True:
-        for _ in range(50):
-            print("\n")
         print("\n===== STUDENT MENU =====")
         print("1. View Info")
         print("2. Change Major")
