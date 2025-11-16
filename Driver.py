@@ -1,4 +1,5 @@
 import subprocess
+from Student import Student
 
 def main_menu():
     while True:
