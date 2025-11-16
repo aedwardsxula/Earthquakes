@@ -10,18 +10,13 @@ def student_driver(student):
 
         if choice == "1":
             student.display_info()
-
         elif choice == "2":
             new_major = input("Enter new major: ")
             student.change_major(new_major)
             print("Major updated!")
-
         elif choice == "3":
             print("Fiscal Clearance:", student.return_clearance_status())
-
         elif choice == "4":
-            print("Exiting Student Menu...")
             break
-
         else:
             print("Invalid choice. Try again.")

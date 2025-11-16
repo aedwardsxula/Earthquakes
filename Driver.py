@@ -1,5 +1,12 @@
 import subprocess
-from load_student import load_student_data
+import sys
+from pathlib import Path
+
+student_folder = Path(__file__).parent / "Student files"
+sys.path.insert(0, str(student_folder))
+
+from Student import Student
+from load_student import load_student
 from student_driver import student_driver
 
 def main_menu():
@@ -13,14 +20,11 @@ def main_menu():
 
         if choice == "1":
             run_java_signup()
-
         elif choice == "2":
             login()
-
         elif choice == "3":
             print("Goodbye!")
             break
-
         else:
             print("Invalid choice. Try again.")
 
@@ -28,29 +32,28 @@ def run_java_signup():
     subprocess.run(["java", "SignUp"])
 
 def login():
-    print("\n=== LOGIN ===")
     name = input("Enter your name: ").strip()
     user_id = input("Enter your ID: ").strip()
+    prefix = user_id[:3]
 
-    if user_id.startswith("900"):
-        student = load_student_data(name, user_id)
-
-        if student is None:
+    if prefix == "900":
+        student = load_student(user_id=user_id)
+        if student is None or student.full_name.lower() != name.lower():
             print("Name or ID incorrect or student not found.")
             return
         for _ in range(50):
             print("\n")
         print(f"Welcome {student.full_name}!")
         student_driver(student)
+
+    elif prefix == "700":
+        print("Welcome Professor!")
+
+    elif prefix == "800":
+        print("Welcome Admin!")
+
     else:
-        print("Non-student logins not implemented yet.")
-        
-
-    if user_id.startswith("800"):
-        print("Admin login not implemented yet.")
-
-    if user_id.startswith("700"):
-        print("Professor login not implemented yet.")
+        print("Invalid ID prefix.")
 
 if __name__ == "__main__":
     main_menu()
