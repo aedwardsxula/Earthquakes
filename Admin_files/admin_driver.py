@@ -18,11 +18,11 @@ def admin_driver(admin):
 
         if choice == "1":
             clear_screen()
-            print("➡️ Course creation coming next...")
+            print("Creating course")
 
         elif choice == "2":
             clear_screen()
-            print("➡️ Student schedule view coming next...")
+            print("Student schedule")
 
         elif choice == "3":
             clear_screen()

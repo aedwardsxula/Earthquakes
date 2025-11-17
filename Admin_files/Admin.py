@@ -8,11 +8,6 @@ class Admin:
         print(f"Name: {self.full_name}")
 
     def add_to_database(self, database):
-        """
-        Input example:
-        admin_object.add_to_database('Database/Accounts.txt')
-        """
-
         def escape(field):
             s = str(field)
             if ',' in s or '"' in s or '\n' in s:

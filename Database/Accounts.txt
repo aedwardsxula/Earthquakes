@@ -1,1 +1,2 @@
 STUDENT,900647177,Emilio Peguero,Freshman,Comp Sci,false
+ADMIN,800237733,EmilioAdmin

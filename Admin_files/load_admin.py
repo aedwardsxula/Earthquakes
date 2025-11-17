@@ -1,4 +1,11 @@
+import sys
+from pathlib import Path
+
+admin_folder = Path(__file__).parent
+sys.path.insert(0, str(admin_folder))
+
 from Admin import Admin
+
 from pathlib import Path
 
 def load_admin(user_id, database=None):

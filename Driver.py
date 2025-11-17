@@ -2,6 +2,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+from Admin_files.load_admin import load_admin
+from Admin_files.admin_driver import admin_driver
+
+
 student_folder = Path(__file__).parent / "Student files"
 sys.path.insert(0, str(student_folder))
 
@@ -48,9 +52,19 @@ def login():
 
     elif prefix == "700":
         print("Welcome Professor!")
-
+        
     elif prefix == "800":
-        print("Welcome Admin!")
+        from Functions import clear_screen
+
+        admin = load_admin(user_id=user_id)
+        if admin is None or admin.full_name.lower() != name.lower():
+            print("Name or ID incorrect or admin not found.")
+            return
+
+        clear_screen()
+        print(f"Welcome {admin.full_name}!")
+        admin_driver(admin)
+
 
     else:
         print("Invalid ID prefix.")
