@@ -1,6 +1,8 @@
 import random
 import csv
 import os
+from pathlib import Path
+
 
 class Course: 
     crns_list = []
@@ -119,4 +121,22 @@ class Course:
             self.class_list.remove(student_name)    
         else:
             print(f"Student {student_name} is not enrolled in this course.")
+    
+    def save_to_txt(self):
+        base = Path(__file__).parent.parent
+        folder = base / "Database" / "courses"
+        folder.mkdir(parents=True, exist_ok=True)
+
+        file_path = folder / f"{self.course_name}.txt"
+
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(f"crn: {self.CRN}\n")
+            f.write(f"course_name: {self.course_name}\n")
+            f.write(f"time: {self.time}\n")
+            f.write("professor: none\n\n")
+            f.write("students:\n")
+            for s in self.class_list:
+                f.write(f"{s}\n")
+
+
     

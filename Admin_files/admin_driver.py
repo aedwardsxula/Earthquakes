@@ -27,6 +27,8 @@ def admin_driver(admin):
             print("Creating course")
             course1 = admin_input_course()
             course1.print_course_details()
+            course1.save_to_txt()
+            print("Course saved.")
 
 
         elif choice == "2":
