@@ -1,6 +1,8 @@
 import random
 import csv
 import os
+from pathlib import Path
+
 
 class Course: 
     crns_list = []
@@ -135,5 +137,6 @@ class Course:
             f.write("students:\n")
             for s in self.class_list:
                 f.write(f"{s}\n")
+
 
     
