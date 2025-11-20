@@ -1,0 +1,4 @@
+20251120| Emilio Peguero | Formatting of Database file structure caused issues | Made the file structure streamlines and formatting in a way that fits the goals of the code 
+20251120| Taylor Mcdile | Making use cases and completing code | Planning meeting to ensure that use cases and general code is completed properly and on time
+20251120| Emilio Peguero | Formatting of the structure of use cases and files | Followed the format set forth by the lead and clarified correct formatting in class
+20251120| Chloe White | Completing use cases (code) | n/a (not in meeting)
