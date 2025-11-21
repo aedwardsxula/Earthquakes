@@ -1,4 +1,3 @@
-
 class Student:
     def __init__(self,student_num, full_name, classification, major, fiscal_clearance):
         self.student_num = student_num
@@ -24,6 +23,9 @@ class Student:
         print(f"Classification: {self.classification}")
         print(f"Fiscally Cleared: {'Yes' if self.fiscal_clearance else 'No'}")
         print(f"Major: {self.major}")
+
+    def display_schedule(self):
+        print("This is where teh schedule would be displayed.")
     
     def return_clearance_status(self):
         return bool(self.fiscal_clearance)
@@ -69,5 +71,3 @@ class Student:
             f.write(record + '\n')
 
           
-    
-

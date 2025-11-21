@@ -12,7 +12,8 @@ def student_driver(student):
         print("1. View Info")
         print("2. Change Major")
         print("3. Check Fiscal Clearance")
-        print("4. Exit")
+        print("4. View Schdule")
+        print("5. Exit")
 
         choice = input("Enter choice: ")
 
@@ -28,6 +29,9 @@ def student_driver(student):
             clear_screen()
             print("Fiscal Clearance:", student.return_clearance_status())
         elif choice == "4":
+            clear_screen()
+            print("View Schdule:", student.display_schedule())
+        elif choice == "5":
             break
         else:
             print("Invalid choice. Try again.")
