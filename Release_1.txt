@@ -125,7 +125,7 @@ Admin Files:
 Student Files:
 - Student.py - Student class
 - student_driver.py - Student menu
-- load_student.py - Load student from database
+- load_student.py - Load student from database`
 
 ---
 
