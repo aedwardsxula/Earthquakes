@@ -8,6 +8,7 @@ sys.path.insert(0, str(root_folder))
 from Functions import clear_screen
 from Functions import admin_input_course
 from Functions import create_student_schedule
+from Functions import manage_fiscal_clearance
 
 def admin_driver(admin):
     all_students_schedules = []
@@ -18,7 +19,8 @@ def admin_driver(admin):
         print("3. View Admin Info")
         print("4. Create Student Schedule")
         print("5. Edit Student Schedule")
-        print("6. Exit")
+        print("6. View student fiscal clearance status")
+        print("7. Exit")
 
         choice = input("Enter choice: ")
 
@@ -92,8 +94,12 @@ def admin_driver(admin):
                         break
                 else:
                     print(f"No schedule found for student {student_900}.")
-
+                    
         elif choice == "6":
+            clear_screen()
+            manage_fiscal_clearance()
+
+        elif choice == "7":
             break
 
         else:
