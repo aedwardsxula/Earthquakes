@@ -13,6 +13,7 @@ from Functions import manage_fiscal_clearance
 def admin_driver(admin):
     all_students_schedules = []
     while True:
+        print("\nWelcome to the Admin Portal!! Please Choose an Action from the Menu!")
         print("\n===== ADMIN MENU =====")
         print("1. Create Course")
         print("2. View Student Schedule")
