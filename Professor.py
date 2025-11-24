@@ -40,7 +40,7 @@ class Professor:
 
         courses_str = ';'.join(self.assigned_courses) if self.assigned_courses else ''
         
-        parts = ["PROFESSOR", self.professor_id, self.full_name, courses_str]
+        parts = ["PROFESSOR", self.professor_id, self.full_name, self.department, courses_str]
         record = ",".join(escape(p) for p in parts)
 
         with open(database, "a", encoding="utf-8") as f:
