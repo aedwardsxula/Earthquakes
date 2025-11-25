@@ -1,0 +1,7 @@
+crn: 36576
+credits: 1
+course_name: PSY 200
+time: M 3–4:50PM
+professor: none
+
+students:

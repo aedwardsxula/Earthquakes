@@ -1,0 +1,7 @@
+crn: 25026
+credits: 3
+course_name: PHI 120
+time: MW 3–4:15PM
+professor: none
+
+students:

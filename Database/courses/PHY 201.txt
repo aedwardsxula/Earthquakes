@@ -1,0 +1,7 @@
+crn: 67598
+credits: 4
+course_name: PHY 201
+time: MWF 8–8:50AM
+professor: none
+
+students:

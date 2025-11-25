@@ -1,6 +1,0 @@
-crn: 73429
-course_name: Comp Sci 
-time: M 10-11AM
-professor: none
-
-students:

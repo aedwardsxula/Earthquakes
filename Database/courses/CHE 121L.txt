@@ -1,0 +1,7 @@
+crn: 46863
+credits: 1
+course_name: CHE 121L
+time: F 8–10:50AM
+professor: none
+
+students:

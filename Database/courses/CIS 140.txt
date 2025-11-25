@@ -1,0 +1,7 @@
+crn: 54052
+credits: 4
+course_name: CIS 140
+time: TR 2:30–3:45PM
+professor: none
+
+students:

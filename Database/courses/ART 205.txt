@@ -1,0 +1,7 @@
+crn: 70420
+credits: 4
+course_name: ART 205
+time: MW 2:30–4:20PM
+professor: none
+
+students:

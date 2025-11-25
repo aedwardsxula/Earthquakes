@@ -1,0 +1,7 @@
+crn: 87227
+credits: 3
+course_name: ENG 101
+time: MWF 9-10AM
+professor: none
+
+students:

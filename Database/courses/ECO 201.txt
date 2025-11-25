@@ -1,0 +1,7 @@
+crn: 24327
+credits: 3
+course_name: ECO 201
+time: TR 8–9:15AM
+professor: none
+
+students:

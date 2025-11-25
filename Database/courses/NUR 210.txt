@@ -1,0 +1,7 @@
+crn: 63919
+credits: 5
+course_name: NUR 210
+time: MW 7:30–9:50AM
+professor: none
+
+students:

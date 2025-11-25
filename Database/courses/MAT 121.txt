@@ -1,0 +1,7 @@
+crn: 48309
+credits: 4
+course_name: MAT 121
+time: TTh 11-12AM
+professor: none
+
+students:

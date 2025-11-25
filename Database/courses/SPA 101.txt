@@ -1,0 +1,7 @@
+crn: 85698
+credits: 3
+course_name: SPA 101
+time: MWF 12–12:50PM
+professor: none
+
+students:

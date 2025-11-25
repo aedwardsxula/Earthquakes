@@ -1,0 +1,7 @@
+crn: 57536
+credits: 4
+course_name: CHE 121
+time: TR 9:30–10:45AM
+professor: none
+
+students:

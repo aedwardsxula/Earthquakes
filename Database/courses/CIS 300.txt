@@ -1,0 +1,7 @@
+crn: 38472
+credits: 5
+course_name: CIS 300
+time: TR 4–6:20PM
+professor: none
+
+students:

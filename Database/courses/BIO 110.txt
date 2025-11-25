@@ -1,0 +1,7 @@
+crn: 68298
+credits: 3
+course_name: BIO 110
+time: MW 1–2:15PM
+professor: none
+
+students:

@@ -1,0 +1,7 @@
+crn: 48992
+credits: 2
+course_name: BUS 150
+time: F 11–12:50PM
+professor: none
+
+students:

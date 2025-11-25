@@ -1,0 +1,7 @@
+crn: 28785
+credits: 4
+course_name: CSC 250
+time: 5:30–6:45PM
+professor: none
+
+students:

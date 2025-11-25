@@ -1,0 +1,7 @@
+crn: 40189
+credits: 3
+course_name: HIS 201
+time: MWF 10–10:50AM
+professor: none
+
+students:

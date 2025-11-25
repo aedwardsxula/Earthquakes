@@ -1,0 +1,7 @@
+crn: 23537
+credits: 1
+course_name: BIO 110L
+time: F 2–3:50PM
+professor: none
+
+students:

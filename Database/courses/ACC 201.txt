@@ -1,0 +1,7 @@
+crn: 27518
+credits: 4
+course_name: ACC 201
+time: TR 12:30–1:45PM
+professor: none
+
+students:
