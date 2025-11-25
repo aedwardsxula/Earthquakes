@@ -1,1 +1,2 @@
-crn, course_name, time, class_list
+crn,course_name,time,class_list,professor
+12345,,,,Dr. Smith
