@@ -24,7 +24,7 @@ class Student:
         print(f"FISCALLY CLEARED: {'Yes' if self.fiscal_clearance else 'No'}")
         # ASCII art printed for display_info
         print("""
-    ___
+           ___
           /___\\
          |     |
          |     |
@@ -33,7 +33,7 @@ class Student:
          \\     /
           \\___/
            \\ /
-        V
+            V
     """)
         print(f"Major: {self.major}")
 
