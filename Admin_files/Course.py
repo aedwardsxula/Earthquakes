@@ -24,10 +24,15 @@ class Course:
         self.time = time
         self.credits = credits
         self.class_list = class_list
+        self.professor = ''
     
     @classmethod
     def save_all_courses_to_csv(cls, csv_path):
         fieldnames = ['crn', 'course_name', 'time', 'credits', 'class_list']
+
+        dirname = os.path.dirname(csv_path)
+        if dirname:
+            os.makedirs(dirname, exist_ok=True)
 
         with open(csv_path, mode="w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -39,7 +44,7 @@ class Course:
                     "course_name": course.course_name,
                     "time": course.time,
                     "credits": course.credits,
-                    "class_list": ";".join(course.class_list),
+                    "class_list": ";".join(course.class_list)
                 })
 
     def print_course_details(self):
@@ -47,6 +52,7 @@ class Course:
         print(f"Course CRN: {self.CRN}")
         print(f"Credits: {self.credits}")
         print(f"Time: {self.time}")
+        print(f"Professor: {self.professor if self.professor else 'Not Assigned'}")
         print("Class List:")
         for student in self.class_list:
             print(f"- {student}")
@@ -63,8 +69,8 @@ class Course:
 
         crns.sort(reverse=True)
 
-        for i in range(1, len(crns) + 1):
-            print(f"{i}. {crns[i -1]}")
+        for i, crn in enumerate(crns, start=1):
+            print(f"{i}. {crn}")
 
     def assign_professor(self, crn, professor_name):
 
@@ -93,6 +99,8 @@ class Course:
                 r["professor"] = professor_name
                 updated_row = r
                 break
+        if str(self.CRN) == crn_str:
+            self.professor = professor_name
 
         # If not found, append a new row with professor populated
         if updated_row is None:
@@ -104,7 +112,7 @@ class Course:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             for r in rows:
-                writer.writerow({k: r.get(k, "") for k in fieldnames})
+                writer.writerow(r)
         
         return updated_row
 
@@ -112,8 +120,9 @@ class Course:
     def change_time(self, new_time):
         self.time = new_time
     
-    def access_crns(self):
-        for crn in Course.crns_list:
+    @classmethod
+    def access_crns(cls):
+        for crn in cls.crns_list:
             print(crn)
     
     @staticmethod        
@@ -145,13 +154,13 @@ class Course:
         """
          csv_path should be `Database/Courses.csv`.
         """
+        dirname = os.path.dirname(csv_path)
+        if dirname: 
+            os.makedirs(dirname, exist_ok=True)
 
-        os.makedirs(os.path.dirname(csv_path), exist_ok=True)
-        fieldnames = ['crn', 'course_name', 'time', 'class_list']
-
-        class_list_str = ''
-        if self.class_list:
-            class_list_str = ';'.join(str(x) for x in self.class_list)
+        
+        fieldnames = ['crn', 'course_name', 'time', 'credits', 'class_list']
+        class_list_str = ";".join(self.class_list) if self.class_list else ""
 
         row = {
             'crn': str(self.CRN),
@@ -160,11 +169,26 @@ class Course:
             'credits': str(self.credits) if self.credits is not None else '',
             'class_list': class_list_str,
         }
+
+        file_exists = os.path.isfile(csv_path)
+        with open(csv_path, mode="a", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+            if not file_exists or os.path.getsize(csv_path) == 0:
+                writer.writeheader()
+
+            writer.writerow(row)
+
     @staticmethod
     def add_already_created_course_to_database(course_obj, csv_path):
+        fieldnames = ["crn", "course_name", "time","credits", "class_list"]
+        file_exists = os.path.isfile(csv_path)
+
         with open(csv_path, mode="a", newline="", encoding="utf-8") as f:
-            fieldnames = ["crn", "course_name", "time", "class_list"]
             writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+            if not file_exists or os.path.getsize(csv_path) == 0:
+                writer.writeheader()
 
             writer.writerow({
                 "crn": course_obj.CRN,

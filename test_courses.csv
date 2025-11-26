@@ -1,3 +1,2 @@
-crn,course_name,time,class_list
-38290,Test Course,MWF 10-11,
-67391,Test Course,MWF 10-11,
+crn,course_name,time,credits,class_list
+75636,Test Course,MWF 10-11,3,
