@@ -13,7 +13,8 @@ def student_driver(student):
         print("2. Change Major")
         print("3. Check Fiscal Clearance")
         print("4. View Schdule")
-        print("5. Exit")
+        print("5. View Previous Schedule(s)")
+        print("6. Exit")
 
         choice = input("Enter choice: ")
 
@@ -33,6 +34,18 @@ def student_driver(student):
             clear_screen()
             print("View Schdule:", student.display_schedule())
         elif choice == "5":
+            clear_screen()
+            choice_schedule = input("Would you like to view a previous schedule? (yes/no): ").strip().lower()
+            while choice_schedule == 'yes':
+                year = input("Enter year of schedule to view (e.g., 2023): ")
+                term = input("Enter term of schedule to view (e.g., Fall, Spring): ")
+                print(f"Viewing previous schedule for {year} {term}:")
+                student.view_previous_schedules(year, term)
+                choice_schedule = input("Would you like to view another previous schedule? (yes/no): ").strip().lower()
+            else:
+                print("Returning to main menu.")
+                choice = input("Enter choice: ")
+        elif choice == "6":
             break
         else:
             print("Invalid choice. Try again.")

@@ -22,7 +22,9 @@ def admin_driver(admin):
         print("4. Create Student Schedule")
         print("5. Edit Student Schedule")
         print("6. View student fiscal clearance status")
-        print("7. Exit")
+        print("7. Create Transcript")
+        print("8. View Transcript")
+        print("9. Exit")
 
         choice = input("Enter choice: ")
 
@@ -102,6 +104,23 @@ def admin_driver(admin):
             manage_fiscal_clearance()
 
         elif choice == "7":
+            clear_screen()
+            print("Create Transcript")
+            student_name = input("Enter student name: ")
+            courses_input = input("Enter courses (comma separated): ")
+            courses_list = [course.strip() for course in courses_input.split(",")]
+            year = input("Enter year: ")
+            semester = input("Enter semester: ")
+            credits = input("Enter total credits: ")
+            admin.create_transcript(student_name, courses_list, year, semester, credits)
+        
+        elif choice == "8":
+            clear_screen()
+            print("View Transcript")
+            student_id = input("Enter student ID to view transcript: ")
+            admin.print_transcript(student_id)
+
+        elif choice == "9":
             break
 
         else:

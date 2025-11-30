@@ -119,4 +119,9 @@ class TestStudentMethods(unittest.TestCase):
             self.assertIn('Roe', line)
         finally:
             os.remove(path)
+    
+    def test_view_previous_schedules_no_file(self):
+        s = Student('118', 'Sam', 'Senior', 'CS', True)
+        # Should not raise even if file does not exist
+        s.view_previous_schedules(2023, 'Fall')
 

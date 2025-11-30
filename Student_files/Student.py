@@ -1,3 +1,7 @@
+from pathlib import Path
+import csv
+
+
 class Student:
     def __init__(self,student_num, full_name, classification, major, fiscal_clearance):
         self.student_num = student_num
@@ -83,4 +87,44 @@ class Student:
         with open(database, 'a', encoding='utf-8') as f:
             f.write(record + '\n')
 
-          
+    def view_previous_schedules(self, year, semester):
+        csv_path = "Database/Transcripts.csv"
+
+        if year is None or semester is None:
+            print("A valid Year and Semester must be provided to view previous schedules.")
+            return
+
+        csv_file = Path(csv_path)
+        if not csv_file.exists():
+            print(f"Error: {csv_path} does not exist.")
+            return
+
+        found = False
+        courses = []
+
+        with open(csv_path, mode="r", newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+
+            for row in reader:
+                # Filter by this student AND the given year/semester
+                if (
+                    row.get("Student_ID") == str(self.ID)
+                    and row.get("Year") == str(year)
+                    and row.get("Semester") == str(semester)
+                ):
+                    found = True
+
+                    # Collect course and credit info
+                    course_list = row.get("Courses_List", "")
+                    credit_hours = row.get("Credits", "")
+
+                    courses.append((course_list, credit_hours))
+
+        if not found:
+            print(f"No schedules found for {year} {semester}.")
+            return
+
+        # Print results
+        print(f"Previous schedules for {year} {semester}:")
+        for course, credits in courses:
+            print(f"- Course: {course} | Credit Hours: {credits}")
