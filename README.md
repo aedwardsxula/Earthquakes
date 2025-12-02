@@ -34,6 +34,11 @@ This project is a command-line university management system designed to simulate
 All information is stored in simple text files inside the Database/ folder, and everything is handled directly through the terminal. The entire system is launched from Driver.py, which reads the login ID and routes each user to the appropriate portal.
 
 
+Contributers:
+epeguero
+dnichol5
+tmcdile
+
 How to Run:
 1.Clone the repo
 2.Open the cloned repo on vs code
