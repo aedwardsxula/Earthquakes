@@ -5,7 +5,7 @@
 - [ ] SDD has the project description, outline, architecture (including UML class diagrams), and all project user stories and use cases.
 - [ ] Each team member must update our team's **Statement of Work** shared Excel spreadsheet.  Your grade on this assignment is based ONLY on the quality of your use cases, your GitHub contributions that result in accepted pull requests, and 10% of your grade will be assigned by your fellow team members.
 - [ ] **Chloe** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
-- [ ] **DeAnna** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
+- [x] **DeAnna** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
 - [ ] **Emilio** must finish his pushes to our repo by 8 PM on Dec 1st and then check this box.
 - [ ] **Taylor** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
 - [ ] **Emilio** must do one last check that the code builds, runs, and all the tests run by 10 PM on Dec 1st and then check this box.
