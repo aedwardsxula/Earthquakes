@@ -1,0 +1,7 @@
+crn: 95405
+credits: 3
+course_name: MAT 103
+time: MWF 9-10AM
+professor: 700123456
+
+students:
