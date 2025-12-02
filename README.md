@@ -28,7 +28,7 @@ Prioritized Project Ideas:
 
 ----------------------------------------------------------------
 
-Purpose of this project:
+Purpose/Goal of this project:
 This project is a command-line university management system designed to simulate how students, professors, and administrators interact with an academic database. When the program runs, users log in with an ID that determines their role. Students can view their schedules, update their major, and check fiscal clearance. Professors can see their assigned classes, review enrolled students, and make updates to course information. Administrators have full control — they can create courses, assign professors, manage student accounts, and generate transcripts.
 
 All information is stored in simple text files inside the Database/ folder, and everything is handled directly through the terminal. The entire system is launched from Driver.py, which reads the login ID and routes each user to the appropriate portal.
