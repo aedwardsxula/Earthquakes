@@ -87,6 +87,25 @@ def create_schedule(student_900):
     
     base_folder = Path(__file__).parent
     courses_folder = base_folder / "Database" / "courses"
+    accounts_file = base_folder / "Database" / "Accounts.txt"
+
+    # Build a quick map of professor_id -> professor_name from Accounts.txt
+    professor_map = {}
+    if accounts_file.exists():
+        try:
+            with open(accounts_file, 'r', encoding='utf-8') as af:
+                for line in af:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    parts = [p.strip().strip('"') for p in line.split(',')]
+                    if parts and parts[0].upper() in ("PROF", "PROFESSOR") and len(parts) > 2:
+                        pid = parts[1]
+                        pname = parts[2]
+                        professor_map[pid] = pname
+        except Exception:
+            # if reading accounts fails, continue without professor names
+            professor_map = {}
     
     available_courses = []
     
@@ -105,6 +124,8 @@ def create_schedule(student_900):
                     time = "TBA"
                     credits = 3
                     students = []
+                    professor_id = None
+                    professor_name = None
                     
                     # Parse the file
                     reading_students = False
@@ -120,6 +141,11 @@ def create_schedule(student_900):
                         elif line.startswith("credits:"):
                             credits_str = line.split(":", 1)[1].strip()
                             credits = int(credits_str) if credits_str.isdigit() else 3
+                        elif line.startswith("professor:"):
+                            prof_val = line.split(":", 1)[1].strip()
+                            if prof_val and prof_val.lower() != 'none':
+                                professor_id = prof_val
+                                professor_name = professor_map.get(prof_val)
                         elif line.startswith("students:"):
                             reading_students = True
                         elif reading_students and line and line != "professor: none":
@@ -129,6 +155,9 @@ def create_schedule(student_900):
                     if crn and course_name:
                         course = Course(course_name, time, credits, students)
                         course.CRN = int(crn)
+                        # attach professor metadata to course instance for display
+                        course.professor_id = professor_id
+                        course.professor_name = professor_name
                         available_courses.append(course)
     
     if not available_courses:
@@ -148,7 +177,8 @@ def create_schedule(student_900):
     print("\n===== AUTO-GENERATED SCHEDULE =====")
     total_credits = sum(c.credits for c in selected_courses)
     for course in selected_courses:
-        print(f"- {course.course_name} ({course.credits} credits) - {course.time} [CRN: {course.CRN}]")
+        prof_display = f"Prof: {course.professor_name}" if getattr(course, 'professor_name', None) else (f"Prof ID: {course.professor_id}" if getattr(course, 'professor_id', None) else "Prof: none")
+        print(f"- {course.course_name} ({course.credits} credits) - {course.time} [CRN: {course.CRN}] - {prof_display}")
     print(f"\nTotal Credits: {total_credits}/19")
     
     # Ask if they want to edit
@@ -163,7 +193,8 @@ def create_schedule(student_900):
     print("\nAvailable courses:")
     for i, course in enumerate(available_courses, 1):
         in_schedule = "✓" if course in selected_courses else " "
-        print(f"{in_schedule} {i}. {course.course_name} ({course.credits} credits) - {course.time} [CRN: {course.CRN}]")
+        prof_display = f"Prof: {course.professor_name}" if getattr(course, 'professor_name', None) else (f"Prof ID: {course.professor_id}" if getattr(course, 'professor_id', None) else "Prof: none")
+        print(f"{in_schedule} {i}. {course.course_name} ({course.credits} credits) - {course.time} [CRN: {course.CRN}] - {prof_display}")
     
     while True:
         print(f"\nCurrent Credits: {total_credits}/19")
@@ -213,7 +244,8 @@ def create_schedule(student_900):
     print("\n===== FINAL SCHEDULE =====")
     total_credits = 0
     for course in selected_courses:
-        print(f"- {course.course_name} ({course.credits} credits) - {course.time} [CRN: {course.CRN}]")
+        prof_display = f"Prof: {course.professor_name}" if getattr(course, 'professor_name', None) else (f"Prof ID: {course.professor_id}" if getattr(course, 'professor_id', None) else "Prof: none")
+        print(f"- {course.course_name} ({course.credits} credits) - {course.time} [CRN: {course.CRN}] - {prof_display}")
         total_credits += course.credits
     print(f"\nTotal Credits: {total_credits}")
     

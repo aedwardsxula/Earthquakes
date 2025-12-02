@@ -7,7 +7,7 @@
 - [ ] **Chloe** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
 - [ ] **DeAnna** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
 - [ ] **Emilio** must finish his pushes to our repo by 8 PM on Dec 1st and then check this box.
-- [ ] **Taylor** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
+- [ v/] **Taylor** must finish her pushes to our repo by 8 PM on Dec 1st and then check this box.
 - [ ] **Emilio** must do one last check that the code builds, runs, and all the tests run by 10 PM on Dec 1st and then check this box.
 - [ ] **Emilio** must "Project Release" tag our repo.
 - [ ] Everyone must complete the Brightspace survey to earn the final points for Assignment08.

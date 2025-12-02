@@ -2,6 +2,6 @@ crn: 29410
 credits: 1
 course_name: PHY 201L
 time: TH 1–2:50PM
-professor: none
+professor: 700541273
 
 students:

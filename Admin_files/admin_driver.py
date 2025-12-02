@@ -24,18 +24,40 @@ def admin_driver(admin):
         print("6. View student fiscal clearance status")
         print("7. Create Transcript")
         print("8. View Transcript")
-        print("9. Exit")
+        print("9. Assign Professor to Existing Course")
+        print("10. Exit")
 
         choice = input("Enter choice: ")
 
         if choice == "1":
             clear_screen()
             print("Creating course")
-            course1 = admin_input_course()
-            course1.print_course_details()
-            course1.save_to_txt()
+            course = admin_input_course()
+            course.print_course_details()
+            course.save_to_txt()
             print("Course saved.")
 
+            # Prompt to optionally assign a professor to the newly created course
+            prof_id = input("Enter professor 700 number to assign this course (or press Enter to skip): ").strip()
+            if prof_id:
+                # Dynamically load the professor loader to avoid import path issues
+                from pathlib import Path
+                import importlib.util
+
+                prof_module_path = Path(__file__).parent.parent / "Professor Files" / "load_professor.py"
+                spec = importlib.util.spec_from_file_location("load_professor", prof_module_path)
+                load_prof_module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(load_prof_module)
+
+                prof = load_prof_module.load_professor(prof_id)
+                if prof is None:
+                    print(f"Professor with id {prof_id} not found in Accounts.txt. No assignment made.")
+                else:
+                    success = prof.assign_course(str(course.CRN))
+                    if success:
+                        print(f"Professor {prof.full_name} (ID {prof.professor_id}) assigned to {course.course_name}.")
+                    else:
+                        print("Assignment not made (already assigned or file not found).")
 
         elif choice == "2":
             clear_screen()
@@ -113,7 +135,7 @@ def admin_driver(admin):
             semester = input("Enter semester: ")
             credits = input("Enter total credits: ")
             admin.create_transcript(student_name, courses_list, year, semester, credits)
-        
+
         elif choice == "8":
             clear_screen()
             print("View Transcript")
@@ -121,6 +143,38 @@ def admin_driver(admin):
             admin.print_transcript(student_id)
 
         elif choice == "9":
+            clear_screen()
+            print("Assign Professor to Existing Course")
+            crn = input("Enter CRN of the course to assign: ").strip()
+            if not crn:
+                print("No CRN entered. Returning to menu.")
+                continue
+
+            prof_id = input("Enter professor 700 number to assign: ").strip()
+            if not prof_id:
+                print("No professor id entered. Returning to menu.")
+                continue
+
+            # Dynamically load the professor loader and attempt assignment
+            from pathlib import Path
+            import importlib.util
+
+            prof_module_path = Path(__file__).parent.parent / "Professor Files" / "load_professor.py"
+            spec = importlib.util.spec_from_file_location("load_professor", prof_module_path)
+            load_prof_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(load_prof_module)
+
+            prof = load_prof_module.load_professor(prof_id)
+            if prof is None:
+                print(f"Professor with id {prof_id} not found in Accounts.txt. No assignment made.")
+            else:
+                success = prof.assign_course(crn)
+                if success:
+                    print(f"Professor {prof.full_name} (ID {prof.professor_id}) assigned to CRN {crn}.")
+                else:
+                    print("Assignment not made (already assigned or matching course file not found).")
+
+        elif choice == "10":
             break
 
         else:

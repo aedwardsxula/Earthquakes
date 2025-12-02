@@ -2,3 +2,6 @@ STUDENT,900647177,Emilio Peguero,Freshman,Comp Sci,false
 ADMIN,800237733,EmilioAdmin
 ADMIN,800123456,Taylor
 STUDENT,900969777,A B,Senoir,Comp Sci,false
+PROF,700123456, Dr.Gain
+PROF,700654321, Dr.Blue
+PROF,700541273, Dr.Wilson
