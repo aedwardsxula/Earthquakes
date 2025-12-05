@@ -13,7 +13,7 @@ sys.path.insert(0, str(admin_folder))
 sys.path.insert(0, str(root_folder))
 
 from Professor import Professor
-from Course import Course
+from Admin_files.Course import Course
 from professor_driver import professor_driver
 
 
