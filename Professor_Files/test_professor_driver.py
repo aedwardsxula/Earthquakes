@@ -4,17 +4,17 @@ import sys
 from unittest.mock import patch
 from io import StringIO
 
-# Add necessary directories to path
-root_folder = Path(__file__).parent
+# Add necessary directories to path - match professor_driver.py's path setup
+root_folder = Path(__file__).parent.parent
 professor_files_folder = root_folder / "Professor_Files"
 admin_folder = root_folder / "Admin_files"
-sys.path.insert(0, str(professor_files_folder))
-sys.path.insert(0, str(admin_folder))
 sys.path.insert(0, str(root_folder))
+sys.path.insert(0, str(admin_folder))
+sys.path.insert(0, str(professor_files_folder))
 
-from Professor_Files.Professor import Professor
-from Admin_files.Course import Course
-from Professor_Files.professor_driver import professor_driver
+from Professor import Professor
+from Course import Course
+from professor_driver import professor_driver
 
 
 class TestProfessorDriver(unittest.TestCase):

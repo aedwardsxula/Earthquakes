@@ -2,7 +2,7 @@ crn: 12345
 credits: 3
 course_name: CPSC 101
 time: MWF 10-11AM
-professor: 700123456
+professor: none
 
 students:
 900222222
