@@ -13,37 +13,28 @@ class Professor:
         for course in self.assigned_courses:
             print(f" - {course}")
 
-    def assign_course(self, crn):
+    def assign_course(self, crn, persist=False, courses_dir="Database/courses"):
         """
-        Assign a course to this professor. By default this will persist the change
-        to the course file in `Database/courses/` by updating the `professor:` line
-        in the matching course file (matched by its `crn:` value). If you only
-        want an in-memory assignment, call with `persist=False`.
+        Assign a course to this professor.
 
         Parameters:
         - crn: int or str - the course CRN to assign
-        - persist: bool - whether to update the course file on disk (default True)
-        - courses_dir: str or Path - directory containing course files
+        - persist: bool - update matching course file on disk (default False)
+        - courses_dir: directory containing course files
 
-        Returns True if assignment was made (and persisted when requested),
-        False if the CRN was already assigned or not found when persisting.
+        Returns True if assignment succeeded, False otherwise.
         """
         from pathlib import Path
         import shutil
 
-        # allow callers to pass persist flag and courses_dir as optional args
-        # keep signature backwards-compatible by accepting only crn in positional
-        persist = True
-        courses_dir = "Database/courses"
-
         crn_str = str(crn).strip()
 
-        # If already assigned in-memory, short-circuit
+        # Already assigned?
         if crn_str in [str(c).strip() for c in self.assigned_courses]:
             print(f"Course {crn} is already assigned to Professor {self.full_name}.")
             return False
 
-        # If persistence is requested, try to find and update the course file
+        # If persistence is enabled, update the course file
         if persist:
             courses_path = Path(courses_dir)
             if not courses_path.exists() or not courses_path.is_dir():
@@ -54,9 +45,9 @@ class Professor:
                 try:
                     text = course_file.read_text(encoding="utf-8").splitlines()
                 except Exception:
-                    # skip files we can't read
                     continue
 
+                # Extract CRN from file
                 file_crn = None
                 crn_index = None
                 for i, line in enumerate(text):
@@ -68,7 +59,7 @@ class Professor:
                 if file_crn != crn_str:
                     continue
 
-                # Found the file for this CRN. Update professor: line.
+                # Found a matching file — update professor line
                 new_prof_line = f"professor: {self.professor_id}"
 
                 prof_index = None
@@ -77,15 +68,14 @@ class Professor:
                         prof_index = j
                         break
 
-            
-                # Create a simple .bak next to the course file (e.g. "MAT 103.bak")
+                # Create backup
                 backup_path = course_file.with_suffix(".bak")
                 shutil.copy2(course_file, backup_path)
 
                 if prof_index is not None:
                     text[prof_index] = new_prof_line
                 else:
-                    
+                    # Insert professor below credits or CRN
                     insert_at = None
                     for j, line in enumerate(text):
                         if line.lower().startswith("credits:"):
@@ -94,7 +84,6 @@ class Professor:
                     if insert_at is None and crn_index is not None:
                         insert_at = crn_index + 1
                     if insert_at is None:
-                        # fallback to appending at end
                         text.append(new_prof_line)
                     else:
                         text.insert(insert_at, new_prof_line)
@@ -107,7 +96,7 @@ class Professor:
                 print(f"CRN {crn} not found in {courses_dir}; no file updated.")
                 return False
 
-    
+        # Memory update only
         self.assigned_courses.append(crn_str)
         print(f"Course {crn} assigned to Professor {self.full_name}.")
         return True
@@ -118,9 +107,8 @@ class Professor:
             print(f"Course {crn} removed from Professor {self.full_name}.")
             return True
         return False
-    
+
     def add_to_database(self, database):
-        
         def escape(field):
             s = str(field)
             if ',' in s or '"' in s or '\n' in s:
@@ -129,10 +117,8 @@ class Professor:
             return s
 
         courses_str = ';'.join(self.assigned_courses) if self.assigned_courses else ''
-        
         parts = ["PROFESSOR", self.professor_id, self.full_name, self.department, courses_str]
         record = ",".join(escape(p) for p in parts)
 
         with open(database, "a", encoding="utf-8") as f:
             f.write(record + "\n")
-    

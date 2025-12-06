@@ -44,7 +44,7 @@ def admin_driver(admin):
                 from pathlib import Path
                 import importlib.util
 
-                prof_module_path = Path(__file__).parent.parent / "Professor Files" / "load_professor.py"
+                prof_module_path = Path(__file__).parent.parent / "Professor_Files" / "load_professor.py"
                 spec = importlib.util.spec_from_file_location("load_professor", prof_module_path)
                 load_prof_module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(load_prof_module)
@@ -159,7 +159,7 @@ def admin_driver(admin):
             from pathlib import Path
             import importlib.util
 
-            prof_module_path = Path(__file__).parent.parent / "Professor Files" / "load_professor.py"
+            prof_module_path = Path(__file__).parent.parent / "Professor_Files" / "load_professor.py"
             spec = importlib.util.spec_from_file_location("load_professor", prof_module_path)
             load_prof_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(load_prof_module)

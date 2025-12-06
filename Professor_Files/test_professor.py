@@ -1,78 +1,78 @@
-import pytest
+import unittest
 from pathlib import Path
 import sys
 import os
 import tempfile
+import io
+from contextlib import redirect_stdout
 
 # Add Professor Files directory to path to import Professor
 root_folder = Path(__file__).parent
-professor_files_folder = root_folder / "Professor Files"
+professor_files_folder = root_folder / "Professor_Files"
 sys.path.insert(0, str(professor_files_folder))
 
-from Professor import Professor
+from Professor_Files.Professor import Professor
 
 
-class TestProfessor:
+class TestProfessor(unittest.TestCase):
     """Test suite for Professor class"""
 
     def test_professor_initialization(self):
-        """Test that a professor is initialized correctly"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science")
-        assert prof.professor_id == "700123456"
-        assert prof.full_name == "Dr. John Smith"
-        assert prof.department == "Computer Science"
-        assert prof.assigned_courses == []
+        self.assertEqual(prof.professor_id, "700123456")
+        self.assertEqual(prof.full_name, "Dr. John Smith")
+        self.assertEqual(prof.department, "Computer Science")
+        self.assertEqual(prof.assigned_courses, [])
 
     def test_professor_initialization_with_courses(self):
-        """Test professor initialization with pre-assigned courses"""
         courses = ["12345", "67890"]
         prof = Professor("700123456", "Dr. Jane Doe", "Mathematics", courses)
-        assert prof.assigned_courses == ["12345", "67890"]
+        self.assertEqual(prof.assigned_courses, ["12345", "67890"])
+
     def test_assign_course(self):
-        """Test assigning a course to a professor"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science")
         result = prof.assign_course("12345")
-        assert result == True
-        assert "12345" in prof.assigned_courses
-        assert len(prof.assigned_courses) == 1
+        self.assertTrue(result)
+        self.assertIn("12345", prof.assigned_courses)
+        self.assertEqual(len(prof.assigned_courses), 1)
 
     def test_assign_duplicate_course(self):
-        """Test that assigning a duplicate course returns False"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science")
         prof.assign_course("12345")
         result = prof.assign_course("12345")
-        assert result == False
-        assert len(prof.assigned_courses) == 1
+        self.assertFalse(result)
+        self.assertEqual(len(prof.assigned_courses), 1)
 
     def test_remove_course(self):
-        """Test removing a course from professor"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science", ["12345", "67890"])
         result = prof.remove_course("12345")
-        assert result == True
-        assert "12345" not in prof.assigned_courses
-        assert len(prof.assigned_courses) == 1
+        self.assertTrue(result)
+        self.assertNotIn("12345", prof.assigned_courses)
+        self.assertEqual(len(prof.assigned_courses), 1)
 
     def test_remove_nonexistent_course(self):
-        """Test removing a course that doesn't exist"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science", ["12345"])
         result = prof.remove_course("99999")
-        assert result == False
-        assert len(prof.assigned_courses) == 1
+        self.assertFalse(result)
+        self.assertEqual(len(prof.assigned_courses), 1)
 
-    def test_display_info(self, capsys):
-        """Test that display_info prints correct information"""
+    def test_display_info(self):
+        """Test stdout capture instead of pytest capsys"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science", ["12345", "67890"])
-        prof.display_info()
-        captured = capsys.readouterr()
-        assert "Professor ID: 700123456" in captured.out
-        assert "Full Name: Dr. John Smith" in captured.out
-        assert "Department: Computer Science" in captured.out
-        assert "12345" in captured.out
-        assert "67890" in captured.out
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            prof.display_info()
+
+        output = buf.getvalue()
+
+        self.assertIn("Professor ID: 700123456", output)
+        self.assertIn("Full Name: Dr. John Smith", output)
+        self.assertIn("Department: Computer Science", output)
+        self.assertIn("12345", output)
+        self.assertIn("67890", output)
 
     def test_add_to_database(self):
-        """Test adding professor to database file"""
-        # Create a temporary file for testing
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
             temp_file = f.name
 
@@ -80,22 +80,20 @@ class TestProfessor:
             prof = Professor("700123456", "Dr. John Smith", "Computer Science", ["12345", "67890"])
             prof.add_to_database(temp_file)
 
-            # Read the file and verify content
             with open(temp_file, 'r', encoding='utf-8') as f:
                 content = f.read().strip()
-            
-            assert "PROFESSOR" in content
-            assert "700123456" in content
-            assert "Dr. John Smith" in content
-            assert "Computer Science" in content
-            assert "12345;67890" in content
+
+            self.assertIn("PROFESSOR", content)
+            self.assertIn("700123456", content)
+            self.assertIn("Dr. John Smith", content)
+            self.assertIn("Computer Science", content)
+            self.assertIn("12345;67890", content)
 
         finally:
-            # Clean up temporary file
             if os.path.exists(temp_file):
                 os.remove(temp_file)
+
     def test_add_to_database_no_courses(self):
-        """Test adding professor with no courses to database"""
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
             temp_file = f.name
 
@@ -105,19 +103,18 @@ class TestProfessor:
 
             with open(temp_file, 'r', encoding='utf-8') as f:
                 content = f.read().strip()
-            
-            assert "PROFESSOR" in content
-            assert "700123456" in content
-            # Should have empty string for courses
+
+            self.assertIn("PROFESSOR", content)
+            self.assertIn("700123456", content)
+
             parts = content.split(',')
-            assert len(parts) == 5  # PROFESSOR, id, name, dept, courses(empty)
+            self.assertEqual(len(parts), 5)
 
         finally:
             if os.path.exists(temp_file):
                 os.remove(temp_file)
 
     def test_add_to_database_special_characters(self):
-        """Test adding professor with special characters in name"""
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
             temp_file = f.name
 
@@ -127,28 +124,31 @@ class TestProfessor:
 
             with open(temp_file, 'r', encoding='utf-8') as f:
                 content = f.read().strip()
-            assert "PROFESSOR" in content
-            assert "Dr. O'Brien, PhD" in content or '"Dr. O\'Brien, PhD"' in content
+
+            self.assertIn("PROFESSOR", content)
+            # Allow both quoted and unquoted depending on implementation
+            self.assertTrue(
+                "Dr. O'Brien, PhD" in content or '"Dr. O\'Brien, PhD"' in content
+            )
 
         finally:
             if os.path.exists(temp_file):
                 os.remove(temp_file)
 
     def test_multiple_course_operations(self):
-        """Test multiple assign and remove operations"""
         prof = Professor("700123456", "Dr. John Smith", "Computer Science")
-        
+
         prof.assign_course("11111")
         prof.assign_course("22222")
         prof.assign_course("33333")
-        assert len(prof.assigned_courses) == 3
-        
+        self.assertEqual(len(prof.assigned_courses), 3)
+
         prof.remove_course("22222")
-        assert len(prof.assigned_courses) == 2
-        assert "22222" not in prof.assigned_courses
-        assert "11111" in prof.assigned_courses
-        assert "33333" in prof.assigned_courses
+        self.assertEqual(len(prof.assigned_courses), 2)
+        self.assertNotIn("22222", prof.assigned_courses)
+        self.assertIn("11111", prof.assigned_courses)
+        self.assertIn("33333", prof.assigned_courses)
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    unittest.main()
